@@ -1,7 +1,7 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-package com.mycompany.ticketwizard;
+package Presentacion.GUI;
 
 import DATOS.Conexion;
 import java.sql.Connection;
