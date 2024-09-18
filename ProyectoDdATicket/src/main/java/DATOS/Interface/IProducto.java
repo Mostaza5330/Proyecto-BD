@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package DATOS;
-import DATOS.Producto;
+package DATOS.Interface;
+import DATOS.Entity.Producto;
+import DATOS.Entity.Producto;
 import java.util.List;
 /**
  *
