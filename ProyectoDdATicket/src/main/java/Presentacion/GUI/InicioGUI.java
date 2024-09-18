@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Presentacion.GUI;
-
+import conexion.ConexionDTO;
+import java.sql.SQLException;
 /**
  *
  * @author osval
@@ -15,7 +16,13 @@ public class InicioGUI extends javax.swing.JFrame {
      */
     public InicioGUI() {
         initComponents();
-    }
+        ConexionDTO con = new ConexionDTO();
+        try{
+        con.conectar();
+        }catch(SQLException e){}
+        
+        
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
