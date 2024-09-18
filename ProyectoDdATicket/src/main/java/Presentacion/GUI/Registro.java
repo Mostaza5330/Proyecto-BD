@@ -4,8 +4,8 @@
  */
 package Presentacion.GUI;
 
-import DATOS.DTO.UsuarioDTO;
-import NEGOCIOS.DAO.UsuarioDAO;
+import DATOS.DAO.UsuarioDAO;
+import NEGOCIOS.UsuarioDTO;
 import conexion.ConexionDTO;
 import java.sql.Date;
 import java.sql.SQLException;
