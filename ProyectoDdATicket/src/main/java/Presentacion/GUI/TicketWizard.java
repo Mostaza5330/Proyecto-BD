@@ -3,7 +3,7 @@
  */
 package Presentacion.GUI;
 
-import DATOS.Conexion;
+import conexion.ConexionDTO;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class TicketWizard {
 
     public static void main(String[] args) {
-        Conexion conexion = new Conexion();
+        ConexionDTO conexion = new ConexionDTO();
         try {
             Connection cnx = conexion.conectar();
         } catch (SQLException e) {

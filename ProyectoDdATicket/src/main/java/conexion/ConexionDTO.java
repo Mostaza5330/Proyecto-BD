@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DATOS;
+package conexion;
 
 import java.sql.Date;
 import java.sql.Connection;
@@ -16,14 +16,14 @@ import javax.swing.JOptionPane;
  *
  * @author eduar
  */
-public class Conexion {
+public class ConexionDTO {
 
     public Connection conectar() throws SQLException {
         String driver = "com.mysql.cj.jdbc.Driver";
         String u = "jdbc:mysql://127.0.0.1:3306/?user=root";
         String url = "jdbc:mysql://127.0.0.1/ticketwizard?autoReconnect=true&useSSL=false";
         String user = "root";
-        String password = "072026";
+        String password = "";
         try {
             // Registrar el Driver
             Class.forName(driver);

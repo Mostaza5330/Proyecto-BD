@@ -4,21 +4,19 @@
  */
 package DATOS;
 
-import NEGOCIOS.IConexion;
-import NEGOCIOS.IProductoDATOS;
+import conexion.IConexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import NEGOCIOS.Producto;
 import java.sql.Statement;
 import java.util.ArrayList;
 /**
  *
  * @author eduar
  */
-public class ProductoDATOS implements IProductoDATOS{
+public class ProductoDTO implements IProducto{
     private IConexion conexion;
     
     @Override
