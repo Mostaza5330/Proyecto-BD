@@ -11,7 +11,6 @@ import java.sql.Date;
  * @author osval
  */
 public class UsuarioDTO {
-    private int idUsuario;
     private String nombre;
     private String correo;
     private Date fechaNacimiento;
@@ -22,8 +21,7 @@ public class UsuarioDTO {
     public UsuarioDTO() {}
 
     // Constructor con todos los campos
-    public UsuarioDTO(int idUsuario, String nombre, String correo, Date fechaNacimiento, double saldo, String contrasena) {
-        this.idUsuario = idUsuario;
+    public UsuarioDTO(String nombre, String correo, Date fechaNacimiento, double saldo, String contrasena) {
         this.nombre = nombre;
         this.correo = correo;
         this.fechaNacimiento = fechaNacimiento;
@@ -32,14 +30,7 @@ public class UsuarioDTO {
     }
 
     // Getters y Setters
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
+    
     public String getNombre() {
         return nombre;
     }
@@ -84,7 +75,6 @@ public class UsuarioDTO {
     @Override
     public String toString() {
         return "UsuarioDTO{" +
-               "idUsuario=" + idUsuario +
                ", nombre='" + nombre + '\'' +
                ", correo='" + correo + '\'' +
                ", fechaNacimiento=" + fechaNacimiento +

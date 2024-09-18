@@ -6,6 +6,7 @@ package Presentacion.GUI;
 
 import DATOS.DTO.UsuarioDTO;
 import NEGOCIOS.DAO.UsuarioDAO;
+import conexion.ConexionDTO;
 import java.sql.Date;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -19,8 +20,10 @@ public class Registro extends javax.swing.JFrame {
     /**
      * Creates new form Registro
      */
+ConexionDTO con;
     public Registro() {
         initComponents();
+        con = new ConexionDTO();
     }
 
     /**

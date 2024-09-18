@@ -20,7 +20,6 @@ public class ConexionDTO {
 
     public Connection conectar() throws SQLException {
         String driver = "com.mysql.cj.jdbc.Driver";
-        String u = "jdbc:mysql://127.0.0.1:3306/?user=root";
         String url = "jdbc:mysql://127.0.0.1/ticketwizard?autoReconnect=true&useSSL=false";
         String user = "root";
         String password = "";

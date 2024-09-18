@@ -48,7 +48,6 @@ public class UsuarioDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 UsuarioDTO usuario = new UsuarioDTO();
-                usuario.setIdUsuario(rs.getInt("id_usuario"));
                 usuario.setNombre(rs.getString("nombre"));
                 usuario.setCorreo(rs.getString("correo"));
                 usuario.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
@@ -73,7 +72,6 @@ public class UsuarioDAO {
             ps.setDate(3, usuario.getFechaNacimiento());
             ps.setDouble(4, usuario.getSaldo());
             ps.setString(5, usuario.getContrasena());
-            ps.setInt(6, usuario.getIdUsuario());
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Usuario actualizado con éxito");
         } catch (SQLException e) {
@@ -106,7 +104,6 @@ public class UsuarioDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 usuario = new UsuarioDTO();
-                usuario.setIdUsuario(rs.getInt("id_usuario"));
                 usuario.setNombre(rs.getString("nombre"));
                 usuario.setCorreo(rs.getString("correo"));
                 usuario.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
