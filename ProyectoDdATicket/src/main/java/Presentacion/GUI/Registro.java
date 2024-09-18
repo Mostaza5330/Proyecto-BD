@@ -4,6 +4,12 @@
  */
 package Presentacion.GUI;
 
+import DATOS.DTO.UsuarioDTO;
+import NEGOCIOS.DAO.UsuarioDAO;
+import java.sql.Date;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author eduar
@@ -28,19 +34,19 @@ public class Registro extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        NombreCompletoTxt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        CorreoElectronicoTxt = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        direccionTxt = new javax.swing.JTextField();
+        fechaNacimientoTxt = new javax.swing.JTextField();
+        ConfirmarRegistroBtn = new javax.swing.JButton();
+        SalirBtn = new javax.swing.JButton();
+        ConfirmarContraPwd = new javax.swing.JPasswordField();
+        contraPwd = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,39 +56,65 @@ public class Registro extends javax.swing.JFrame {
 
         jLabel2.setText("Nombre Completo");
 
+        NombreCompletoTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NombreCompletoTxtActionPerformed(evt);
+            }
+        });
+
         jLabel3.setText("Correo Electronico");
+
+        CorreoElectronicoTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CorreoElectronicoTxtActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Contraseña");
 
         jLabel6.setText("Confirmar Contraseña");
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Fecha de Nacimiento");
 
         jLabel7.setText("Direccion");
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        direccionTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                direccionTxtActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Confirmar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        fechaNacimientoTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                fechaNacimientoTxtActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        ConfirmarRegistroBtn.setText("Confirmar");
+        ConfirmarRegistroBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                ConfirmarRegistroBtnActionPerformed(evt);
+            }
+        });
+
+        SalirBtn.setText("Cancelar");
+        SalirBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirBtnActionPerformed(evt);
+            }
+        });
+
+        ConfirmarContraPwd.setText("jPasswordField1");
+        ConfirmarContraPwd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfirmarContraPwdActionPerformed(evt);
+            }
+        });
+
+        contraPwd.setText("jPasswordField1");
+        contraPwd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contraPwdActionPerformed(evt);
             }
         });
 
@@ -96,27 +128,27 @@ public class Registro extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField4)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3)
+                            .addComponent(CorreoElectronicoTxt)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel2)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addComponent(NombreCompletoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(ConfirmarContraPwd)
+                            .addComponent(contraPwd))
                         .addGap(63, 63, 63)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(direccionTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                            .addComponent(fechaNacimientoTxt)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(130, 130, 130)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(ConfirmarRegistroBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(SalirBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(442, 442, 442))
         );
@@ -131,51 +163,91 @@ public class Registro extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(NombreCompletoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fechaNacimientoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CorreoElectronicoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(contraPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(ConfirmarContraPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(direccionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(50, 50, 50)
-                .addComponent(jButton1)
+                .addComponent(ConfirmarRegistroBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(SalirBtn)
                 .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void direccionTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direccionTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_direccionTxtActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    private void ConfirmarRegistroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarRegistroBtnActionPerformed
+        // Obtener los datos de los campos de texto
+    String nombre = NombreCompletoTxt.getText();
+    String correo = CorreoElectronicoTxt.getText();
+    String direccion = direccionTxt.getText();
+    String fechaNacimiento = fechaNacimientoTxt.getText();
+    String contrasena = new String(contraPwd.getPassword());
+    String confirmarContrasena = new String(ConfirmarContraPwd.getPassword());
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    // Validar que las contraseñas coincidan
+    if (!contrasena.equals(confirmarContrasena)) {
+        JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.");
+        return;
+    }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    // Crear un objeto UsuarioDTO
+    UsuarioDTO usuario = new UsuarioDTO();
+    usuario.setNombre(nombre);
+    usuario.setCorreo(correo);
+    usuario.setFechaNacimiento(Date.valueOf(fechaNacimiento)); // Convertir String a Date
+    usuario.setContrasena(contrasena);
+
+    // Llamar al DAO para registrar el usuario
+    UsuarioDAO dao = new UsuarioDAO();
+    dao.agregarUsuario(usuario);
+    JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.");
+    }//GEN-LAST:event_ConfirmarRegistroBtnActionPerformed
+
+    private void SalirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_SalirBtnActionPerformed
+
+    private void ConfirmarContraPwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarContraPwdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ConfirmarContraPwdActionPerformed
+
+    private void contraPwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contraPwdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contraPwdActionPerformed
+
+    private void CorreoElectronicoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorreoElectronicoTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CorreoElectronicoTxtActionPerformed
+
+    private void fechaNacimientoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaNacimientoTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaNacimientoTxtActionPerformed
+
+    private void NombreCompletoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCompletoTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NombreCompletoTxtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,8 +285,14 @@ public class Registro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JPasswordField ConfirmarContraPwd;
+    private javax.swing.JButton ConfirmarRegistroBtn;
+    private javax.swing.JTextField CorreoElectronicoTxt;
+    private javax.swing.JTextField NombreCompletoTxt;
+    private javax.swing.JButton SalirBtn;
+    private javax.swing.JPasswordField contraPwd;
+    private javax.swing.JTextField direccionTxt;
+    private javax.swing.JTextField fechaNacimientoTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -222,11 +300,5 @@ public class Registro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }
