@@ -20,7 +20,8 @@ public class Registro extends javax.swing.JFrame {
     /**
      * Creates new form Registro
      */
-ConexionDTO con;
+    ConexionDTO con;
+
     public Registro() {
         initComponents();
         con = new ConexionDTO();
@@ -52,6 +53,7 @@ ConexionDTO con;
         contraPwd = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Registro");
@@ -153,7 +155,7 @@ ConexionDTO con;
                             .addComponent(ConfirmarRegistroBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(SalirBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(442, 442, 442))
+                .addGap(366, 366, 366))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,10 +192,11 @@ ConexionDTO con;
                 .addComponent(ConfirmarRegistroBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SalirBtn)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void direccionTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direccionTxtActionPerformed
@@ -202,34 +205,39 @@ ConexionDTO con;
 
     private void ConfirmarRegistroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarRegistroBtnActionPerformed
         // Obtener los datos de los campos de texto
-    String nombre = NombreCompletoTxt.getText();
-    String correo = CorreoElectronicoTxt.getText();
-    String direccion = direccionTxt.getText();
-    String fechaNacimiento = fechaNacimientoTxt.getText();
-    String contrasena = new String(contraPwd.getPassword());
-    String confirmarContrasena = new String(ConfirmarContraPwd.getPassword());
+        String nombre = NombreCompletoTxt.getText();
+        String correo = CorreoElectronicoTxt.getText();
+        String direccion = direccionTxt.getText();
+        String fechaNacimiento = fechaNacimientoTxt.getText();
+        String contrasena = new String(contraPwd.getPassword());
+        String confirmarContrasena = new String(ConfirmarContraPwd.getPassword());
 
-    // Validar que las contraseñas coincidan
-    if (!contrasena.equals(confirmarContrasena)) {
-        JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.");
-        return;
-    }
+        // Validar que las contraseñas coincidan
+        if (!contrasena.equals(confirmarContrasena)) {
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.");
+            return;
+        }
 
-    // Crear un objeto UsuarioDTO
-    UsuarioDTO usuario = new UsuarioDTO();
-    usuario.setNombre(nombre);
-    usuario.setCorreo(correo);
-    usuario.setFechaNacimiento(Date.valueOf(fechaNacimiento)); // Convertir String a Date
-    usuario.setContrasena(contrasena);
+        // Crear un objeto UsuarioDTO
+        UsuarioDTO usuario = new UsuarioDTO();
+        usuario.setNombre(nombre);
+        usuario.setCorreo(correo);
+        try {
+            usuario.setFechaNacimiento(Date.valueOf(fechaNacimiento)); // Convertir String a Date
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "El formato de la fecha de nacimiento es yyyy-mm-dd.");
+        }
+        usuario.setContrasena(contrasena);
 
-    // Llamar al DAO para registrar el usuario
-    UsuarioDAO dao = new UsuarioDAO();
-    dao.agregarUsuario(usuario);
-    JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.");
+        // Llamar al DAO para registrar el usuario
+        UsuarioDAO dao = new UsuarioDAO();
+        dao.agregarUsuario(usuario);
+        JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.");
+        //  
     }//GEN-LAST:event_ConfirmarRegistroBtnActionPerformed
 
     private void SalirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirBtnActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_SalirBtnActionPerformed
 
     private void ConfirmarContraPwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarContraPwdActionPerformed

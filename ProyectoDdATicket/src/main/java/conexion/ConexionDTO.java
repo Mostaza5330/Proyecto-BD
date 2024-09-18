@@ -28,7 +28,7 @@ public class ConexionDTO {
             Class.forName(driver);
             // Obtener la conexión,pasamos argumentos (url, user y password) para establecer una conexion con la basse de datos
             Connection conexion = DriverManager.getConnection(url, user, password);
-            JOptionPane.showMessageDialog(null, "Conexion realizada con exito");
+            System.out.println("Conexion realizada con exito");
             return conexion;
 
         } catch (ClassNotFoundException e) {
