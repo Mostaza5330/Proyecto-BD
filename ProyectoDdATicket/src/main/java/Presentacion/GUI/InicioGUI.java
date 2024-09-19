@@ -4,24 +4,28 @@
  */
 package Presentacion.GUI;
 import conexion.ConexionDTO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 /**
  *
  * @author osval
  */
 public class InicioGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form InicioGUI
-     */
+    private ConexionDTO con;
+
     public InicioGUI() {
         initComponents();
-        ConexionDTO con = new ConexionDTO();
-        try{
-        con.conectar();
-        }catch(SQLException e){}
-        
-        
+        con = new ConexionDTO(); // Inicializamos la conexión
+        try {
+            con.conectar(); // Conectamos a la base de datos
+        } catch (SQLException e) {
+            System.out.println("Error al conectar con la base de datos");
+        }
+
         }
 
     /**
@@ -34,21 +38,21 @@ public class InicioGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        correoElectronicoTxt = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        contraseñaTxt = new javax.swing.JTextField();
+        enterBtn = new javax.swing.JButton();
+        registroBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Inicio de Sesion");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        correoElectronicoTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                correoElectronicoTxtActionPerformed(evt);
             }
         });
 
@@ -56,23 +60,23 @@ public class InicioGUI extends javax.swing.JFrame {
 
         jLabel3.setText("Contraseña");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        contraseñaTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                contraseñaTxtActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Entrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        enterBtn.setText("Entrar");
+        enterBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                enterBtnActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Registro");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        registroBtn.setText("Registro");
+        registroBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                registroBtnActionPerformed(evt);
             }
         });
 
@@ -86,12 +90,12 @@ public class InicioGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(registroBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(enterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel2)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField1)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(correoElectronicoTxt)
+                        .addComponent(contraseñaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(523, Short.MAX_VALUE))
@@ -104,36 +108,64 @@ public class InicioGUI extends javax.swing.JFrame {
                 .addGap(77, 77, 77)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(correoElectronicoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(contraseñaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(enterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(registroBtn)
                 .addContainerGap(120, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void correoElectronicoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correoElectronicoTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_correoElectronicoTxtActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void contraseñaTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contraseñaTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_contraseñaTxtActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void enterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterBtnActionPerformed
+String correo = correoElectronicoTxt.getText();
+        String contrasena = contraseñaTxt.getText();
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (correo.isEmpty() || contrasena.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
+            return;
+        }
+
+        try {
+            // Verificar si el correo y la contraseña coinciden en la base de datos
+            Connection connection = con.conectar();
+            String query = "SELECT * FROM Usuarios WHERE correo = ? AND contrasena = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, correo);
+            statement.setString(2, contrasena);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // Si el usuario existe, se muestra un mensaje de bienvenida
+                JOptionPane.showMessageDialog(this, "Bienvenido " + resultSet.getString("nombre") + "!");
+                // Aquí puedes abrir el siguiente formulario de tu aplicación
+            } else {
+                // Si no hay coincidencias
+                JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos.");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al consultar la base de datos.");
+        }
+    }//GEN-LAST:event_enterBtnActionPerformed
+
+    private void registroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_registroBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,12 +203,12 @@ public class InicioGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JTextField contraseñaTxt;
+    private javax.swing.JTextField correoElectronicoTxt;
+    private javax.swing.JButton enterBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton registroBtn;
     // End of variables declaration//GEN-END:variables
 }
