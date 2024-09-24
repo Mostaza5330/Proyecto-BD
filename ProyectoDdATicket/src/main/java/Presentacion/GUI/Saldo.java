@@ -53,6 +53,11 @@ public class Saldo extends javax.swing.JFrame {
         });
 
         atrasBtn.setText("Atras");
+        atrasBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,18 +102,23 @@ public class Saldo extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void añadirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirBtnActionPerformed
         String monto = montoTxt.getText();
         String confirmarMonto = confirmarMontoTxt.getText();
-        
+
         // Validar que los montos coincidan
         if (!monto.equals(confirmarMonto)) {
-            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.");
+            JOptionPane.showMessageDialog(this, "Los montos no coinciden.");
             return;
         }
     }//GEN-LAST:event_añadirBtnActionPerformed
+
+    private void atrasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBtnActionPerformed
+        dispose();
+    }//GEN-LAST:event_atrasBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,6 +145,7 @@ public class Saldo extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Saldo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

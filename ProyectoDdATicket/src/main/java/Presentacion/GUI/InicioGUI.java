@@ -3,12 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Presentacion.GUI;
+
 import conexion.ConexionDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author osval
@@ -26,7 +28,7 @@ public class InicioGUI extends javax.swing.JFrame {
             System.out.println("Error al conectar con la base de datos");
         }
 
-        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -121,6 +123,7 @@ public class InicioGUI extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void correoElectronicoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correoElectronicoTxtActionPerformed
@@ -132,7 +135,7 @@ public class InicioGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_contraseñaTxtActionPerformed
 
     private void enterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterBtnActionPerformed
-String correo = correoElectronicoTxt.getText();
+        String correo = correoElectronicoTxt.getText();
         String contrasena = contraseñaTxt.getText();
 
         if (correo.isEmpty() || contrasena.isEmpty()) {
@@ -152,7 +155,9 @@ String correo = correoElectronicoTxt.getText();
             if (resultSet.next()) {
                 // Si el usuario existe, se muestra un mensaje de bienvenida
                 JOptionPane.showMessageDialog(this, "Bienvenido " + resultSet.getString("nombre") + "!");
-                // Aquí puedes abrir el siguiente formulario de tu aplicación
+
+                new Principal().setVisible(true);
+                dispose();
             } else {
                 // Si no hay coincidencias
                 JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos.");
@@ -164,7 +169,8 @@ String correo = correoElectronicoTxt.getText();
     }//GEN-LAST:event_enterBtnActionPerformed
 
     private void registroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroBtnActionPerformed
-        // TODO add your handling code here:
+        new Registro().setVisible(true);
+        dispose();
     }//GEN-LAST:event_registroBtnActionPerformed
 
     /**
@@ -192,6 +198,7 @@ String correo = correoElectronicoTxt.getText();
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(InicioGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

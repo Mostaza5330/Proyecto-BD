@@ -233,11 +233,15 @@ public class Registro extends javax.swing.JFrame {
         UsuarioDAO dao = new UsuarioDAO();
         dao.agregarUsuario(usuario);
         JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.");
+        new InicioGUI().setVisible(true);
+        dispose();
         //  
     }//GEN-LAST:event_ConfirmarRegistroBtnActionPerformed
 
     private void SalirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirBtnActionPerformed
-        System.exit(0);
+        new InicioGUI().setVisible(true);
+        dispose();
+
     }//GEN-LAST:event_SalirBtnActionPerformed
 
     private void ConfirmarContraPwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarContraPwdActionPerformed
@@ -285,6 +289,7 @@ public class Registro extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

@@ -58,7 +58,6 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(153, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Mis Boletos");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -76,10 +75,14 @@ public class Principal extends javax.swing.JFrame {
 
         verMasBtn.setText("Ver mas..");
 
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Saldo");
 
         addSaldoBtn.setText("Añadir Saldo");
+        addSaldoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSaldoBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -162,7 +165,13 @@ public class Principal extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addSaldoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaldoBtnActionPerformed
+        new Saldo().setVisible(true);
+        
+    }//GEN-LAST:event_addSaldoBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,6 +198,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
