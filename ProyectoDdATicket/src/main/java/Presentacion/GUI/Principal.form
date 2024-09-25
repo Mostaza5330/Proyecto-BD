@@ -186,6 +186,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Ver mas.."/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verMasBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -193,6 +196,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="mostrarSaldoTxt">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mostrarSaldoTxtActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="addSaldoBtn">
           <Properties>

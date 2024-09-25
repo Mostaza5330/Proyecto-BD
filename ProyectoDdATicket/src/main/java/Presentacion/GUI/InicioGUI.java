@@ -4,6 +4,7 @@
  */
 package Presentacion.GUI;
 
+import NEGOCIOS.UsuarioDTO;
 import conexion.ConexionDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -144,7 +145,6 @@ public class InicioGUI extends javax.swing.JFrame {
         }
 
         try {
-            // Verificar si el correo y la contraseña coinciden en la base de datos
             Connection connection = con.conectar();
             String query = "SELECT * FROM Usuarios WHERE correo = ? AND contrasena = ?";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -153,19 +153,29 @@ public class InicioGUI extends javax.swing.JFrame {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                // Si el usuario existe, se muestra un mensaje de bienvenida
-                JOptionPane.showMessageDialog(this, "Bienvenido " + resultSet.getString("nombre") + "!");
+                // Crear un objeto UsuarioDTO con los datos del usuario
+                UsuarioDTO usuario = new UsuarioDTO(
+                        resultSet.getString("nombre"),
+                        resultSet.getString("correo"),
+                        resultSet.getDate("fecha_nacimiento"),
+                        resultSet.getDouble("saldo"), 
+                        resultSet.getString("contrasena")
+                );
 
-                new Principal().setVisible(true);
+                // Mostrar mensaje de bienvenida
+                JOptionPane.showMessageDialog(this, "Bienvenido " + usuario.getNombre() + "!");
+
+                
+                new Principal(usuario).setVisible(true);
                 dispose();
             } else {
-                // Si no hay coincidencias
                 JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos.");
             }
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error al consultar la base de datos.");
         }
+
     }//GEN-LAST:event_enterBtnActionPerformed
 
     private void registroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroBtnActionPerformed

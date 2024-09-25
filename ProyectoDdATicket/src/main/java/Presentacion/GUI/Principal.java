@@ -4,17 +4,22 @@
  */
 package Presentacion.GUI;
 
+import NEGOCIOS.UsuarioDTO;
+
 /**
  *
  * @author osval
  */
 public class Principal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Principal
-     */
-    public Principal() {
-        initComponents();
+    private UsuarioDTO usuario;
+
+    // Constructor que recibe un objeto UsuarioDTO
+    public Principal(UsuarioDTO usuario) {
+        this.usuario = usuario;
+        mostrarSaldoTxt.setText(String.format("%.2f", usuario.getSaldo()));
+        mostrarSaldoTxt.setColumns(10); 
+
     }
 
     /**
@@ -74,8 +79,19 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable1);
 
         verMasBtn.setText("Ver mas..");
+        verMasBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verMasBtnActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Saldo");
+
+        mostrarSaldoTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarSaldoTxtActionPerformed(evt);
+            }
+        });
 
         addSaldoBtn.setText("Añadir Saldo");
         addSaldoBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -170,44 +186,16 @@ public class Principal extends javax.swing.JFrame {
 
     private void addSaldoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaldoBtnActionPerformed
         new Saldo().setVisible(true);
-        
+
     }//GEN-LAST:event_addSaldoBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void verMasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verMasBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_verMasBtnActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
-        });
-    }
+    private void mostrarSaldoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarSaldoTxtActionPerformed
+        
+    }//GEN-LAST:event_mostrarSaldoTxtActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSaldoBtn;
