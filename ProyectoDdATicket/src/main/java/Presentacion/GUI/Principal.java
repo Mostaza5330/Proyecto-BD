@@ -201,7 +201,7 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addSaldoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaldoBtnActionPerformed
-        new Saldo().setVisible(true);
+        new Saldo(usuario).setVisible(true);
 
     }//GEN-LAST:event_addSaldoBtnActionPerformed
 

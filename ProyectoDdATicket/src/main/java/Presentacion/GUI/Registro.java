@@ -3,8 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Presentacion.GUI;
-
-import DATOS.DAO.UsuarioDAO;
+import NEGOCIOS.UsuarioServicio;
 import NEGOCIOS.UsuarioDTO;
 import conexion.ConexionDTO;
 import java.sql.Date;
@@ -205,37 +204,39 @@ public class Registro extends javax.swing.JFrame {
 
     private void ConfirmarRegistroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarRegistroBtnActionPerformed
         // Obtener los datos de los campos de texto
-        String nombre = NombreCompletoTxt.getText();
-        String correo = CorreoElectronicoTxt.getText();
-        String direccion = direccionTxt.getText();
-        String fechaNacimiento = fechaNacimientoTxt.getText();
-        String contrasena = new String(contraPwd.getPassword());
-        String confirmarContrasena = new String(ConfirmarContraPwd.getPassword());
+    String nombre = NombreCompletoTxt.getText();
+    String correo = CorreoElectronicoTxt.getText();
+    String fechaNacimiento = fechaNacimientoTxt.getText();
+    String contrasena = new String(contraPwd.getPassword());
+    String confirmarContrasena = new String(ConfirmarContraPwd.getPassword());
 
-        // Validar que las contraseñas coincidan
-        if (!contrasena.equals(confirmarContrasena)) {
-            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.");
-            return;
-        }
+    // Validar que las contraseñas coincidan
+    if (!contrasena.equals(confirmarContrasena)) {
+        JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.");
+        return;
+    }
 
-        // Crear un objeto UsuarioDTO
-        UsuarioDTO usuario = new UsuarioDTO();
-        usuario.setNombre(nombre);
-        usuario.setCorreo(correo);
-        try {
-            usuario.setFechaNacimiento(Date.valueOf(fechaNacimiento)); // Convertir String a Date
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "El formato de la fecha de nacimiento es yyyy-mm-dd.");
-        }
-        usuario.setContrasena(contrasena);
+    // Crear un objeto UsuarioDTO
+    UsuarioDTO usuario = new UsuarioDTO();
+    usuario.setNombre(nombre);
+    usuario.setCorreo(correo);
+    try {
+        usuario.setFechaNacimiento(Date.valueOf(fechaNacimiento)); // Convertir String a Date
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "El formato de la fecha de nacimiento es yyyy-mm-dd.");
+        return; // Agregar un return aquí para evitar llamar al servicio en caso de error
+    }
+    usuario.setContrasena(contrasena);
 
-        // Llamar al DAO para registrar el usuario
-        UsuarioDAO dao = new UsuarioDAO();
-        dao.agregarUsuario(usuario);
+    // Usar el servicio para registrar el usuario
+    UsuarioServicio usuarioServicio = new UsuarioServicio();
+    if (usuarioServicio.registrarUsuario(usuario)) {
         JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.");
         new InicioGUI().setVisible(true);
         dispose();
-        //  
+    } else {
+        JOptionPane.showMessageDialog(this, "Error al registrar el usuario.");
+    }
     }//GEN-LAST:event_ConfirmarRegistroBtnActionPerformed
 
     private void SalirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirBtnActionPerformed
@@ -264,41 +265,6 @@ public class Registro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreCompletoTxtActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Registro().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField ConfirmarContraPwd;

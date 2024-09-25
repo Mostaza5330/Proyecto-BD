@@ -6,6 +6,7 @@ package DATOS.DAO;
 
 import NEGOCIOS.UsuarioDTO;
 import conexion.ConexionDTO;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,9 +20,9 @@ import javax.swing.JOptionPane;
  * @author osval
  */
 public class UsuarioDAO {
-    
+
     // Método para agregar un nuevo usuario utilizando UsuarioDTO
-    public void agregarUsuario(UsuarioDTO usuario) {
+    public boolean agregarUsuario(UsuarioDTO usuario) {
         ConexionDTO conexionDTO = new ConexionDTO();
         try (Connection con = conexionDTO.conectar()) {
             String query = "INSERT INTO Usuarios (nombre, correo, fecha_nacimiento, saldo, contrasena) VALUES (?, ?, ?, ?, ?)";
@@ -31,11 +32,13 @@ public class UsuarioDAO {
             ps.setDate(3, usuario.getFechaNacimiento());
             ps.setDouble(4, usuario.getSaldo());
             ps.setString(5, usuario.getContrasena());
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Usuario agregado con éxito");
+            int result = ps.executeUpdate();
+            return result > 0; // Retorna true si se agregó un usuario
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al agregar usuario: " + e.getMessage());
+            e.printStackTrace();
+            return false; // Retorna false en caso de error
         }
+
     }
 
     // Método para listar todos los usuarios y devolverlos como objetos UsuarioDTO
@@ -115,6 +118,23 @@ public class UsuarioDAO {
         }
         return usuario;
     }
-    
-}
 
+    public boolean actualizarSaldo(UsuarioDTO usuario, double nuevoSaldo) {
+        ConexionDTO conexionDTO = new ConexionDTO();
+        try (Connection con = conexionDTO.conectar()) {
+            String query = "UPDATE usuarios SET saldo = ? WHERE id_usuario = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setDouble(1, nuevoSaldo);
+            ps.setInt(2, ()); // Asegúrate de tener un método para obtener el ID del usuario
+
+            int filasActualizadas = ps.executeUpdate();
+            return filasActualizadas > 0; // Retorna true si se actualizó al menos una fila
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Retorna false si hubo un error
+        }
+    }
+
+}

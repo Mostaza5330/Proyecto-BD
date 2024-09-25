@@ -4,6 +4,8 @@
  */
 package Presentacion.GUI;
 
+import NEGOCIOS.UsuarioDTO;
+import NEGOCIOS.UsuarioServicio;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,8 +17,15 @@ public class Saldo extends javax.swing.JFrame {
     /**
      * Creates new form Saldo
      */
-    public Saldo() {
+    private UsuarioDTO usuario;
+    private UsuarioServicio usuarioServicio;
+
+    public Saldo(UsuarioDTO usuario) {
         initComponents();
+        this.usuario = usuario;
+        this.usuarioServicio = new UsuarioServicio();
+        mostrarSaldoTxt.setText(String.format("%.2f", usuario.getSaldo()));
+
     }
 
     /**
@@ -35,6 +44,8 @@ public class Saldo extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         añadirBtn = new javax.swing.JButton();
         atrasBtn = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        mostrarSaldoTxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +70,14 @@ public class Saldo extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Tu saldo es:");
+
+        mostrarSaldoTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarSaldoTxtActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -67,26 +86,36 @@ public class Saldo extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(97, 97, 97)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(confirmarMontoTxt)
-                                .addComponent(montoTxt))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(46, 46, 46)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(añadirBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(atrasBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(montoTxt)
+                            .addComponent(confirmarMontoTxt)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(143, 143, 143)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(añadirBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(atrasBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(174, 174, 174)
+                        .addComponent(jLabel4)))
                 .addContainerGap(97, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(mostrarSaldoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(157, 157, 157))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addComponent(jLabel1)
-                .addGap(56, 56, 56)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addGap(4, 4, 4)
+                .addComponent(mostrarSaldoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(montoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -98,7 +127,7 @@ public class Saldo extends javax.swing.JFrame {
                 .addComponent(añadirBtn)
                 .addGap(39, 39, 39)
                 .addComponent(atrasBtn)
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         pack();
@@ -107,54 +136,55 @@ public class Saldo extends javax.swing.JFrame {
 
     private void añadirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirBtnActionPerformed
         String monto = montoTxt.getText();
-        String confirmarMonto = confirmarMontoTxt.getText();
+    String confirmarMonto = confirmarMontoTxt.getText();
 
-        // Validar que los montos coincidan
-        if (!monto.equals(confirmarMonto)) {
-            JOptionPane.showMessageDialog(this, "Los montos no coinciden.");
-            return;
+    // Validar que los montos coincidan
+    if (!monto.equals(confirmarMonto)) {
+        JOptionPane.showMessageDialog(this, "Los montos no coinciden.");
+        return;
+    } else {
+        try {
+            double montoDouble = Double.parseDouble(monto);
+
+            // Asegurarse de que el monto sea positivo
+            if (montoDouble <= 0) {
+                JOptionPane.showMessageDialog(this, "El monto debe ser positivo.");
+                return;
+            }
+
+            // Llamar al método de UsuarioServicio para agregar saldo
+            boolean exito = usuarioServicio.agregarSaldo(usuario.getSaldo()); // Llamada actualizada
+
+            if (exito) {
+                // Actualizar el saldo en el objeto UsuarioDTO
+                double nuevoSaldo = usuario.getSaldo() + montoDouble;
+                usuario.setSaldo(nuevoSaldo);
+
+                // Mostrar mensaje de éxito
+                JOptionPane.showMessageDialog(this, "Saldo añadido correctamente. Nuevo saldo: " + String.format("%.2f", nuevoSaldo));
+
+                // Limpiar los campos de texto
+                montoTxt.setText("");
+                confirmarMontoTxt.setText("");
+                mostrarSaldoTxt.setText(String.format("%.2f", usuario.getSaldo()));
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al añadir saldo en la base de datos.");
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un monto válido.");
         }
+    }
     }//GEN-LAST:event_añadirBtnActionPerformed
 
     private void atrasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBtnActionPerformed
         dispose();
     }//GEN-LAST:event_atrasBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Saldo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Saldo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Saldo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Saldo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void mostrarSaldoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarSaldoTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mostrarSaldoTxtActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Saldo().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atrasBtn;
@@ -163,6 +193,8 @@ public class Saldo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField montoTxt;
+    private javax.swing.JTextField mostrarSaldoTxt;
     // End of variables declaration//GEN-END:variables
 }
