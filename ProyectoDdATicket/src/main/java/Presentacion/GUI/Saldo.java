@@ -42,7 +42,7 @@ public class Saldo extends javax.swing.JFrame {
         confirmarMontoTxt = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        añadirBtn = new javax.swing.JButton();
+        añadirSaldoBtn = new javax.swing.JButton();
         atrasBtn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         mostrarSaldoTxt = new javax.swing.JTextField();
@@ -56,10 +56,10 @@ public class Saldo extends javax.swing.JFrame {
 
         jLabel3.setText("Confirmar monto");
 
-        añadirBtn.setText("Confirmar");
-        añadirBtn.addActionListener(new java.awt.event.ActionListener() {
+        añadirSaldoBtn.setText("Confirmar");
+        añadirSaldoBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                añadirBtnActionPerformed(evt);
+                añadirSaldoBtnActionPerformed(evt);
             }
         });
 
@@ -72,6 +72,7 @@ public class Saldo extends javax.swing.JFrame {
 
         jLabel4.setText("Tu saldo es:");
 
+        mostrarSaldoTxt.setEditable(false);
         mostrarSaldoTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mostrarSaldoTxtActionPerformed(evt);
@@ -92,7 +93,7 @@ public class Saldo extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(46, 46, 46)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(añadirBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(añadirSaldoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(atrasBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(montoTxt)
@@ -124,7 +125,7 @@ public class Saldo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(confirmarMontoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
-                .addComponent(añadirBtn)
+                .addComponent(añadirSaldoBtn)
                 .addGap(39, 39, 39)
                 .addComponent(atrasBtn)
                 .addContainerGap(90, Short.MAX_VALUE))
@@ -134,48 +135,48 @@ public class Saldo extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void añadirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirBtnActionPerformed
+    private void añadirSaldoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirSaldoBtnActionPerformed
         String monto = montoTxt.getText();
-    String confirmarMonto = confirmarMontoTxt.getText();
+        String confirmarMonto = confirmarMontoTxt.getText();
 
-    // Validar que los montos coincidan
-    if (!monto.equals(confirmarMonto)) {
-        JOptionPane.showMessageDialog(this, "Los montos no coinciden.");
-        return;
-    } else {
-        try {
-            double montoDouble = Double.parseDouble(monto);
+        // Validar que los montos coincidan
+        if (!monto.equals(confirmarMonto)) {
+            JOptionPane.showMessageDialog(this, "Los montos no coinciden.");
+            return;
+        } else {
+            try {
+                double montoDouble = Double.parseDouble(monto);
 
-            // Asegurarse de que el monto sea positivo
-            if (montoDouble <= 0) {
-                JOptionPane.showMessageDialog(this, "El monto debe ser positivo.");
-                return;
+                // Asegurarse de que el monto sea positivo
+                if (montoDouble <= 0) {
+                    JOptionPane.showMessageDialog(this, "El monto debe ser positivo.");
+                    return;
+                }
+
+                // Llamar al método de UsuarioServicio para agregar saldo
+                boolean exito = usuarioServicio.agregarSaldo(usuario, montoDouble);
+
+                if (exito) {
+                    // Actualizar el saldo en el objeto UsuarioDTO
+                    double nuevoSaldo = usuario.getSaldo() + montoDouble;
+                    usuario.setSaldo(nuevoSaldo);
+
+                    // Mostrar mensaje de éxito
+                    JOptionPane.showMessageDialog(this, "Saldo añadido correctamente. Nuevo saldo: " + String.format("%.2f", nuevoSaldo));
+
+                    // Limpiar los campos de texto
+                    montoTxt.setText("");
+                    confirmarMontoTxt.setText("");
+                    mostrarSaldoTxt.setText(String.format("%.2f", usuario.getSaldo()));
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al añadir saldo en la base de datos.");
+                }
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un monto válido.");
             }
-
-            // Llamar al método de UsuarioServicio para agregar saldo
-            boolean exito = usuarioServicio.agregarSaldo(usuario.getSaldo()); // Llamada actualizada
-
-            if (exito) {
-                // Actualizar el saldo en el objeto UsuarioDTO
-                double nuevoSaldo = usuario.getSaldo() + montoDouble;
-                usuario.setSaldo(nuevoSaldo);
-
-                // Mostrar mensaje de éxito
-                JOptionPane.showMessageDialog(this, "Saldo añadido correctamente. Nuevo saldo: " + String.format("%.2f", nuevoSaldo));
-
-                // Limpiar los campos de texto
-                montoTxt.setText("");
-                confirmarMontoTxt.setText("");
-                mostrarSaldoTxt.setText(String.format("%.2f", usuario.getSaldo()));
-            } else {
-                JOptionPane.showMessageDialog(this, "Error al añadir saldo en la base de datos.");
-            }
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un monto válido.");
         }
-    }
-    }//GEN-LAST:event_añadirBtnActionPerformed
+    }//GEN-LAST:event_añadirSaldoBtnActionPerformed
 
     private void atrasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBtnActionPerformed
         dispose();
@@ -188,7 +189,7 @@ public class Saldo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atrasBtn;
-    private javax.swing.JButton añadirBtn;
+    private javax.swing.JButton añadirSaldoBtn;
     private javax.swing.JTextField confirmarMontoTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

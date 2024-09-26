@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Presentacion.GUI;
+
 import NEGOCIOS.UsuarioServicio;
 import NEGOCIOS.UsuarioDTO;
 import conexion.ConexionDTO;
@@ -204,39 +205,52 @@ public class Registro extends javax.swing.JFrame {
 
     private void ConfirmarRegistroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarRegistroBtnActionPerformed
         // Obtener los datos de los campos de texto
-    String nombre = NombreCompletoTxt.getText();
-    String correo = CorreoElectronicoTxt.getText();
-    String fechaNacimiento = fechaNacimientoTxt.getText();
-    String contrasena = new String(contraPwd.getPassword());
-    String confirmarContrasena = new String(ConfirmarContraPwd.getPassword());
+        String nombre = NombreCompletoTxt.getText().trim();
+        String correo = CorreoElectronicoTxt.getText().trim();
+        String fechaNacimiento = fechaNacimientoTxt.getText().trim();
+        String contrasena = new String(contraPwd.getPassword());
+        String confirmarContrasena = new String(ConfirmarContraPwd.getPassword());
 
-    // Validar que las contraseñas coincidan
-    if (!contrasena.equals(confirmarContrasena)) {
-        JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.");
-        return;
-    }
+        // Validar que los campos no estén vacíos
+        if (nombre.isEmpty() || correo.isEmpty() || fechaNacimiento.isEmpty() || contrasena.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
+            return;
+        }
 
-    // Crear un objeto UsuarioDTO
-    UsuarioDTO usuario = new UsuarioDTO();
-    usuario.setNombre(nombre);
-    usuario.setCorreo(correo);
-    try {
-        usuario.setFechaNacimiento(Date.valueOf(fechaNacimiento)); // Convertir String a Date
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "El formato de la fecha de nacimiento es yyyy-mm-dd.");
-        return; // Agregar un return aquí para evitar llamar al servicio en caso de error
-    }
-    usuario.setContrasena(contrasena);
+        // Validar que las contraseñas coincidan
+        if (!contrasena.equals(confirmarContrasena)) {
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.");
+            return;
+        }
 
-    // Usar el servicio para registrar el usuario
-    UsuarioServicio usuarioServicio = new UsuarioServicio();
-    if (usuarioServicio.registrarUsuario(usuario)) {
-        JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.");
-        new InicioGUI().setVisible(true);
-        dispose();
-    } else {
-        JOptionPane.showMessageDialog(this, "Error al registrar el usuario.");
-    }
+        // Validar el formato de la fecha
+        if (!fechaNacimiento.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            JOptionPane.showMessageDialog(this, "El formato de la fecha de nacimiento es yyyy-mm-dd.");
+            return;
+        }
+
+        // Crear un objeto UsuarioDTO
+        UsuarioDTO usuario = new UsuarioDTO();
+        usuario.setNombre(nombre);
+        usuario.setCorreo(correo);
+        usuario.setFecha_nacimiento(Date.valueOf(fechaNacimiento));
+        usuario.setContrasena(contrasena);
+
+        UsuarioServicio usuarioServicio = new UsuarioServicio();
+        try {
+            int idUsuario = usuarioServicio.registrarUsuario(usuario); // Captura el ID del usuario registrado
+            if (idUsuario > 0) { // Verifica que el ID sea válido
+                JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.");
+                new InicioGUI().setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al registrar el usuario. Por favor, intente de nuevo.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al registrar el usuario: " + e.getMessage());
+        }
+
+
     }//GEN-LAST:event_ConfirmarRegistroBtnActionPerformed
 
     private void SalirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirBtnActionPerformed

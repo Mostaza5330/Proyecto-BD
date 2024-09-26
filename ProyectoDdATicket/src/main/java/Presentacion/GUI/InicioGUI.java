@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Presentacion.GUI;
 
 import NEGOCIOS.UsuarioDTO;
@@ -153,19 +149,15 @@ public class InicioGUI extends javax.swing.JFrame {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                // Crear un objeto UsuarioDTO con los datos del usuario
                 UsuarioDTO usuario = new UsuarioDTO(
+                        resultSet.getInt("id_usuario"), // Recupera el ID autoincrementable
                         resultSet.getString("nombre"),
                         resultSet.getString("correo"),
                         resultSet.getDate("fecha_nacimiento"),
-                        resultSet.getDouble("saldo"), 
+                        resultSet.getDouble("saldo"),
                         resultSet.getString("contrasena")
                 );
-
-                // Mostrar mensaje de bienvenida
                 JOptionPane.showMessageDialog(this, "Bienvenido " + usuario.getNombre() + "!");
-
-                
                 new Principal(usuario).setVisible(true);
                 dispose();
             } else {

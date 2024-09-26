@@ -1,4 +1,5 @@
 package NEGOCIOS;
+
 import java.sql.Date;
 
 /**
@@ -6,17 +7,20 @@ import java.sql.Date;
  * @author osval
  */
 public class UsuarioDTO {
+
+    private int id_usuario; // ID autoincrementable
     private String nombre;
     private String correo;
     private Date fechaNacimiento;
     private double saldo;
     private String contrasena;
 
-    // Constructor vacío
-    public UsuarioDTO() {}
-
-    // Constructor con todos los campos
-    public UsuarioDTO(String nombre, String correo, Date fechaNacimiento, double saldo, String contrasena) {
+    public UsuarioDTO(){
+        
+    }
+    // Constructor que incluye el ID
+    public UsuarioDTO(int id_usuario, String nombre, String correo, Date fechaNacimiento, double saldo, String contrasena) {
+        this.id_usuario = id_usuario; // Asignación del ID
         this.nombre = nombre;
         this.correo = correo;
         this.fechaNacimiento = fechaNacimiento;
@@ -24,8 +28,14 @@ public class UsuarioDTO {
         this.contrasena = contrasena;
     }
 
-    // Getters y Setters
-    
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -42,11 +52,11 @@ public class UsuarioDTO {
         this.correo = correo;
     }
 
-    public Date getFechaNacimiento() {
+    public Date getFecha_nacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFecha_nacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -66,16 +76,17 @@ public class UsuarioDTO {
         this.contrasena = contrasena;
     }
 
+
     // Método toString() para depuración
     @Override
     public String toString() {
-        return "UsuarioDTO{" +
-               "nombre='" + nombre + '\'' +
-               ", correo='" + correo + '\'' +
-               ", fechaNacimiento=" + fechaNacimiento +
-               ", saldo=" + saldo +
-               ", contrasena='" + contrasena + '\'' +
-               '}';
+        return "UsuarioDTO{"
+                + "nombre='" + nombre + '\''
+                + ", correo='" + correo + '\''
+                + ", fechaNacimiento=" + fechaNacimiento
+                + ", saldo=" + saldo
+                + ", contrasena='" + contrasena + '\''
+                + '}';
     }
-    
+
 }

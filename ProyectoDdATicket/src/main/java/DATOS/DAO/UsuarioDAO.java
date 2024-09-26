@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -20,25 +21,33 @@ import javax.swing.JOptionPane;
  * @author osval
  */
 public class UsuarioDAO {
+ConexionDTO conexionDTO = new ConexionDTO();
 
     // Método para agregar un nuevo usuario utilizando UsuarioDTO
-    public boolean agregarUsuario(UsuarioDTO usuario) {
-        ConexionDTO conexionDTO = new ConexionDTO();
-        try (Connection con = conexionDTO.conectar()) {
-            String query = "INSERT INTO Usuarios (nombre, correo, fecha_nacimiento, saldo, contrasena) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(query);
+    public int agregarUsuario(UsuarioDTO usuario) {
+        int idGenerado = -1; // Valor por defecto en caso de error
+        String query = "INSERT INTO Usuarios (nombre, correo, fecha_nacimiento, saldo, contrasena) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection con = conexionDTO.conectar(); PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, usuario.getNombre());
             ps.setString(2, usuario.getCorreo());
-            ps.setDate(3, usuario.getFechaNacimiento());
+            ps.setDate(3, usuario.getFecha_nacimiento());
             ps.setDouble(4, usuario.getSaldo());
             ps.setString(5, usuario.getContrasena());
-            int result = ps.executeUpdate();
-            return result > 0; // Retorna true si se agregó un usuario
+
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas > 0) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        idGenerado = rs.getInt(1); // Obtén el ID generado
+                    }
+                }
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false; // Retorna false en caso de error
+            JOptionPane.showMessageDialog(null, "Error al agregar usuario: " + e.getMessage());
         }
 
+        return idGenerado; // Retorna el ID generado o -1 en caso de error
     }
 
     // Método para listar todos los usuarios y devolverlos como objetos UsuarioDTO
@@ -53,7 +62,7 @@ public class UsuarioDAO {
                 UsuarioDTO usuario = new UsuarioDTO();
                 usuario.setNombre(rs.getString("nombre"));
                 usuario.setCorreo(rs.getString("correo"));
-                usuario.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
+                usuario.setFecha_nacimiento(rs.getDate("fecha_nacimiento"));
                 usuario.setSaldo(rs.getDouble("saldo"));
                 usuario.setContrasena(rs.getString("contrasena"));
                 usuarios.add(usuario);
@@ -72,7 +81,7 @@ public class UsuarioDAO {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, usuario.getNombre());
             ps.setString(2, usuario.getCorreo());
-            ps.setDate(3, usuario.getFechaNacimiento());
+            ps.setDate(3, usuario.getFecha_nacimiento());
             ps.setDouble(4, usuario.getSaldo());
             ps.setString(5, usuario.getContrasena());
             ps.executeUpdate();
@@ -109,7 +118,7 @@ public class UsuarioDAO {
                 usuario = new UsuarioDTO();
                 usuario.setNombre(rs.getString("nombre"));
                 usuario.setCorreo(rs.getString("correo"));
-                usuario.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
+                usuario.setFecha_nacimiento(rs.getDate("fecha_nacimiento"));
                 usuario.setSaldo(rs.getDouble("saldo"));
                 usuario.setContrasena(rs.getString("contrasena"));
             }
@@ -119,22 +128,34 @@ public class UsuarioDAO {
         return usuario;
     }
 
-    public boolean actualizarSaldo(UsuarioDTO usuario, double nuevoSaldo) {
+    public boolean agregarSaldo(int idUsuario, double monto) {
         ConexionDTO conexionDTO = new ConexionDTO();
         try (Connection con = conexionDTO.conectar()) {
-            String query = "UPDATE usuarios SET saldo = ? WHERE id_usuario = ?";
-            PreparedStatement ps = con.prepareStatement(query);
+            // Obtener el saldo actual del usuario
+            String obtenerSaldoQuery = "SELECT saldo FROM Usuarios WHERE id_usuario = ?";
+            PreparedStatement obtenerSaldoStmt = con.prepareStatement(obtenerSaldoQuery);
+            obtenerSaldoStmt.setInt(1, idUsuario);
+            ResultSet rs = obtenerSaldoStmt.executeQuery();
 
-            ps.setDouble(1, nuevoSaldo);
-            ps.setInt(2, ()); // Asegúrate de tener un método para obtener el ID del usuario
+            if (rs.next()) {
+                double saldoActual = rs.getDouble("saldo");
+                double nuevoSaldo = saldoActual + monto;
 
-            int filasActualizadas = ps.executeUpdate();
-            return filasActualizadas > 0; // Retorna true si se actualizó al menos una fila
+                // Actualizar el saldo con el nuevo valor
+                String actualizarSaldoQuery = "UPDATE Usuarios SET saldo = ? WHERE id_usuario = ?";
+                PreparedStatement actualizarSaldoStmt = con.prepareStatement(actualizarSaldoQuery);
+                actualizarSaldoStmt.setDouble(1, nuevoSaldo);
+                actualizarSaldoStmt.setInt(2, idUsuario);
 
+                int filasActualizadas = actualizarSaldoStmt.executeUpdate();
+                return filasActualizadas > 0; // Retorna true si se actualizó el saldo
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario no encontrado.");
+                return false;
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false; // Retorna false si hubo un error
+            JOptionPane.showMessageDialog(null, "Error al actualizar saldo: " + e.getMessage());
+            return false;
         }
     }
-
 }
