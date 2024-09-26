@@ -210,7 +210,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_verMasBtnActionPerformed
 
     private void mostrarSaldoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarSaldoTxtActionPerformed
-
+mostrarSaldoTxt.setText(String.format("%.2f", usuario.getSaldo()));
     }//GEN-LAST:event_mostrarSaldoTxtActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

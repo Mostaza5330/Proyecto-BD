@@ -48,6 +48,8 @@ public class Saldo extends javax.swing.JFrame {
         mostrarSaldoTxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
         jLabel1.setText("Añadir Saldo");
@@ -176,9 +178,11 @@ public class Saldo extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Por favor, ingrese un monto válido.");
             }
         }
+        mostrarSaldoTxt.setText(String.format("%.2f", usuario.getSaldo()));
     }//GEN-LAST:event_añadirSaldoBtnActionPerformed
 
     private void atrasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBtnActionPerformed
+        mostrarSaldoTxt.setText(String.format("%.2f", usuario.getSaldo()));
         dispose();
     }//GEN-LAST:event_atrasBtnActionPerformed
 
