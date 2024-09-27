@@ -26,8 +26,11 @@ public class InicioGUI extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println("Error al conectar con la base de datos");
         }
+        // Creé la instancia fuera de la clase anonima para que no 
+        // soltara error
         AdminGUI a = new AdminGUI(this, true);
-        // Comando para abrir el modo Administrador
+        // Comando para abrir el modo Administrador pulsando F7 dentro
+        // del campo de texto  de correo electrónico
         correoElectronicoTxt.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e){
