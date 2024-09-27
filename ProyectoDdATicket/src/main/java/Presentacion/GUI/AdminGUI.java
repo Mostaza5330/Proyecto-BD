@@ -4,12 +4,21 @@
  */
 package Presentacion.GUI;
 
+import DATOS.DAO.EventoDAO;
+import NEGOCIOS.EventoDTO;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author pausa
  */
 public class AdminGUI extends javax.swing.JDialog {
 
+    private Connection connection;
     /**
      * Creates new form AdminGUI
      */
@@ -17,8 +26,11 @@ public class AdminGUI extends javax.swing.JDialog {
         super(parent, modal);
         setLocationRelativeTo(null);
         initComponents();
+        this.connection = connection;
+        
     }
-
+    
+    EventoDAO evDAO = new EventoDAO(connection);
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -112,7 +124,44 @@ public class AdminGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        try {
+            EventoDTO evento1 = new EventoDTO(
+            1,
+            "Concierto de Rock",
+            new Date(2024 - 1900, 8, 15), // 15 de septiembre de 2024
+            "Auditorio Nacional",
+            "Ciudad de México",
+            "CDMX",
+            "Un emocionante concierto con las mejores bandas de rock del momento."
+        );
+        evDAO.agregarEvento(evento1);
+        
+        EventoDTO evento2 = new EventoDTO(
+            2,
+            "Feria del Libro",
+            new Date(2024 - 1900, 10, 5), // 5 de noviembre de 2024
+            "Centro Cultural",
+            "Guadalajara",
+            "Jalisco",
+            "Una feria donde podrás encontrar los libros más recientes y participar en actividades literarias."
+        );
+        
+            evDAO.agregarEvento(evento2);
+        
+        
+        EventoDTO evento3 = new EventoDTO(
+            3,
+            "Exposición de Arte",
+            new Date(2024 - 1900, 11, 20), // 20 de diciembre de 2024
+            "Museo de Arte Moderno",
+            "Monterrey",
+            "Nuevo León",
+            "Exposición de obras contemporáneas de artistas emergentes."
+        );
+        evDAO.agregarEvento(evento3);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
