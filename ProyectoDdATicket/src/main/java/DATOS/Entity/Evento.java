@@ -17,21 +17,8 @@ public class Evento {
     private String estado;
     private String descripcion;
 
-    // Constructor vacío
-    public Evento() {
-    }
+    // Constructor, getters y setters
 
-    // Constructor sin ID
-    public Evento(String nombreEvento, Date fechaEvento, String venue, String ciudad, String estado, String descripcion) {
-        this.nombreEvento = nombreEvento;
-        this.fechaEvento = fechaEvento;
-        this.venue = venue;
-        this.ciudad = ciudad;
-        this.estado = estado;
-        this.descripcion = descripcion;
-    }
-    
-    // Constructor Completo
     public Evento(int idEvento, String nombreEvento, Date fechaEvento, String venue, String ciudad, String estado, String descripcion) {
         this.idEvento = idEvento;
         this.nombreEvento = nombreEvento;
@@ -42,7 +29,8 @@ public class Evento {
         this.descripcion = descripcion;
     }
 
-    // Getters y Setters
+    public Evento() {}
+
     public int getIdEvento() {
         return idEvento;
     }
@@ -98,6 +86,8 @@ public class Evento {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+
 
     @Override
     public int hashCode() {
