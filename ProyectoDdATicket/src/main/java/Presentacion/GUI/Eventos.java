@@ -22,6 +22,7 @@ public class Eventos extends javax.swing.JFrame {
     public Eventos() {
         initComponents();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,7 +39,7 @@ public class Eventos extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         txtFechaEvent = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtPrecio = new javax.swing.JTextField();
+        txtDescripcion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtCiudad = new javax.swing.JTextField();
@@ -54,7 +55,7 @@ public class Eventos extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Precio:");
+        jLabel4.setText("Descripcion:");
 
         jLabel5.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -84,10 +85,10 @@ public class Eventos extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Venue:");
 
-        txtPrecio.setBackground(new java.awt.Color(255, 255, 255));
-        txtPrecio.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
-        txtPrecio.setForeground(new java.awt.Color(51, 51, 51));
-        txtPrecio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtDescripcion.setBackground(new java.awt.Color(255, 255, 255));
+        txtDescripcion.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
+        txtDescripcion.setForeground(new java.awt.Color(51, 51, 51));
+        txtDescripcion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel2.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -157,7 +158,7 @@ public class Eventos extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPrecio)
+                            .addComponent(txtDescripcion)
                             .addComponent(txtEstado))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -195,7 +196,7 @@ public class Eventos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AgregarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,13 +213,13 @@ public class Eventos extends javax.swing.JFrame {
 
     private void AgregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarBtnActionPerformed
         ConexionDTO conexionDTO = new ConexionDTO();
-        
+
         String nombre = txtNombre.getText();
         String venue = txtVenue.getText();
         String fecha = txtFechaEvent.getText(); // Asegúrate de que esté en formato correcto (yyyy-MM-dd)
         String ciudad = txtCiudad.getText();
         String estado = txtEstado.getText();
-        double precio = Double.parseDouble(txtPrecio.getText());
+        String descripcion = txtDescripcion.getText();
 
         // Insertar los datos en la base de datos
         String sql = "INSERT INTO eventos (nombre_evento, fecha_evento, venue, ciudad, estado, descripcion) VALUES (?, ?, ?, ?, ?, ?)";
@@ -226,11 +227,12 @@ public class Eventos extends javax.swing.JFrame {
         try (Connection conn = conexionDTO.conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, nombre);
-            ps.setString(2, venue);
-            ps.setString(3, fecha);
+            ps.setString(2, fecha);
+            ps.setString(3, venue);
+
             ps.setString(4, ciudad);
             ps.setString(5, estado);
-            ps.setDouble(6, precio);
+            ps.setString(6, descripcion);
 
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) {
@@ -296,10 +298,10 @@ public class Eventos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField txtCiudad;
+    private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtFechaEvent;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtVenue;
     // End of variables declaration//GEN-END:variables
 }
