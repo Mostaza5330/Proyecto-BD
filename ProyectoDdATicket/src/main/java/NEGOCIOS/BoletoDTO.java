@@ -9,5 +9,5 @@ package NEGOCIOS;
  * @author osval
  */
 public class BoletoDTO {
-    
+//    public List<Boleto> getBoletos
 }

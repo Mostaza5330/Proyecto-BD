@@ -2,6 +2,8 @@ package Presentacion.GUI;
 
 import NEGOCIOS.UsuarioDTO;
 import conexion.ConexionDTO;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,9 +26,18 @@ public class InicioGUI extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println("Error al conectar con la base de datos");
         }
-
+        AdminGUI a = new AdminGUI(this, true);
+        // Comando para abrir el modo Administrador
+        correoElectronicoTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e){
+                if (e.getKeyCode() == KeyEvent.VK_F7) {                  
+                    a.setVisible(true);
+                }
+            }
+        });
     }
-
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
